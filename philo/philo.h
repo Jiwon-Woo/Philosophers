@@ -29,7 +29,7 @@ typedef struct s_philo_info {
 }	t_philo_info;
 
 int				ft_strlen(char *str);
-int				atoi_ret_err(char *str, int *integer);
+int				ft_atoi(char *str, int *integer);
 int				write_err(char *err_message);
 int				*init_philo_arg(int argc, char **argv);
 t_philo_info	*init_philo_info(int *philo_arg);

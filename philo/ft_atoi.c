@@ -20,7 +20,7 @@ static int	atoi_sign(char *str)
 	return (sign);
 }
 
-int	atoi_ret_err(char *str, int *integer)
+int	ft_atoi(char *str, int *integer)
 {
 	int	index;
 	int	num;

@@ -13,7 +13,7 @@ int	*init_philo_arg(int argc, char **argv)
 	memset(philo, -1, sizeof(int) * argc);
 	philo[0] = argc - 1;
 	while (++i < argc)
-		atoi_ret_err(argv[i], &philo[i]);
+		ft_atoi(argv[i], &philo[i]);
 	i = -1;
 	while (++i < argc)
 	{

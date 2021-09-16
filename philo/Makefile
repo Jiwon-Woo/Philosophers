@@ -3,7 +3,7 @@ LIB = libphilo.a
 CFLAGS = -Wall -Wextra -Werror
 LFLAG = -L. -lphilo
 SOURCE = ft_strlen.c \
-	atoi_ret_err.c \
+	ft_atoi.c \
 	write_err.c \
 	init_philo_arg.c
 OBJECT = $(SOURCE:.c=.o)
