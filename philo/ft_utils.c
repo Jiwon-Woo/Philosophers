@@ -1,3 +1,5 @@
+#include "philo.h"
+
 int	ft_strlen(char *str)
 {
 	int	len;
@@ -8,4 +10,10 @@ int	ft_strlen(char *str)
 	while (str[len])
 		len++;
 	return (len);
+}
+
+int	ft_error(char *err_message)
+{
+	write(1, err_message, ft_strlen(err_message));
+	return (1);
 }

@@ -2,10 +2,10 @@ NAME = philo
 LIB = libphilo.a
 CFLAGS = -Wall -Wextra -Werror
 LFLAG = -L. -lphilo
-SOURCE = ft_strlen.c \
+SOURCE = ft_utils.c \
 	ft_atoi.c \
-	write_err.c \
-	init_philo_arg.c
+	ft_init.c \
+	ft_valid.c 
 OBJECT = $(SOURCE:.c=.o)
 MAIN = main.c
 
