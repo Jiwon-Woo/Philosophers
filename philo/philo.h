@@ -14,16 +14,23 @@
 # define TIME_TO_SLEEP 3
 # define NUM_OF_EACH_MUST_EAT 4
 
+# define LFORK 1
+# define RFORK 2
+# define EAT 3
+# define SLEEP 4
+# define THINK 5
+
 typedef struct s_info t_info;
 typedef struct s_philo t_philo;
 
 typedef struct s_philo {
 	int				idx;
-	int				rfork_idx;
-	int				lfork_idx;
+	// int				rfork_idx;
+	// int				lfork_idx;
 	pthread_t		id;
 	pthread_mutex_t	*rfork;
 	pthread_mutex_t	*lfork;
+	int				state;
 	double			last_eat;
 	double			start_time;
 	t_info			*info;
@@ -38,6 +45,7 @@ typedef struct s_info {
 	pthread_mutex_t	*forks;
 	t_philo			*philo;
 	pthread_mutex_t	lock;
+	pthread_mutex_t	sleeping;
 }	t_info;
 
 int		ft_strlen(char *str);

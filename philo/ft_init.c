@@ -21,13 +21,14 @@ void	init_philo(t_info *info)
 	{
 		info->philo[i].id = 0;
 		info->philo[i].idx = i;
-		info->philo[i].rfork_idx = i;
+		// info->philo[i].rfork_idx = i;
+		// info->philo[i].lfork_idx = (i + 1) % info->num_of_philo;
 		info->philo[i].rfork = &(info->forks[i]);
-		info->philo[i].lfork_idx = (i + 1) % info->num_of_philo;
 		info->philo[i].lfork = &(info->forks[(i + 1) % info->num_of_philo]);
 		info->philo[i].info = info;
 		info->philo[i].start_time = get_ms_time();
 		info->philo[i].last_eat = 0;
+		info->philo[i].state = 0;
 	}
 }
 
@@ -46,6 +47,7 @@ int	init_forks(t_info *info)
 	int	j;
 
 	pthread_mutex_init(&(info->lock), NULL);
+	pthread_mutex_init(&(info->sleeping), NULL);
 	i = -1;
 	while (++i < info->num_of_philo)
 	{
