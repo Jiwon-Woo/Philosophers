@@ -21,18 +21,28 @@ int	ft_error(char *error_message)
 void	ft_print_status(t_philo *philo, char *status)
 {
 	pthread_mutex_lock(&(philo->info->print));
-	printf("%6dms Philosopher %d %s (%d/%d)\n", (int)(get_ms_time() - philo->start_time), 
-			philo->idx, status, philo->count_eat, philo->info->num_of_each_must_eat);
+	printf("%6dms Philosopher %d %s\n", \
+			(int)(get_ms_time() - philo->start_time), philo->idx, status);
 	pthread_mutex_unlock(&(philo->info->print));
 }
 
 void	ft_usleep(double time)
 {
-	double start;
+	double	start;
 
 	start = get_ms_time();
 	while (time >= get_ms_time() - start)
 	{
 		usleep(10);
 	}
+}
+
+double	get_ms_time(void)
+{
+	struct timeval	time;
+	double			time_ms;
+
+	gettimeofday(&time, 0);
+	time_ms = time.tv_sec * 1000 + ((double)time.tv_usec / 1000);
+	return (time_ms);
 }

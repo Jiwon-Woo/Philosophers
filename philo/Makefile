@@ -8,12 +8,13 @@ SOURCE = ft_utils.c \
 	ft_valid.c 
 OBJECT = $(SOURCE:.c=.o)
 MAIN = main.c
+HEADER = philo.h
 
 $(NAME): $(LIB) $(MAIN)
 	gcc $(MAIN) $(CFLAGS) $(LFLAG) -o $(NAME)
 $(LIB): $(OBJECT)
 	ar rcs $(LIB) $(OBJECT)
-$(OBJECT): $(SOURCE)
+$(OBJECT): $(SOURCE) $(HEADER)
 	gcc $(CFLAGS) -c $(SOURCE)
 
 all : $(NAME)

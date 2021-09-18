@@ -17,6 +17,8 @@ void	init_philo(t_info *info)
 	int		i;
 
 	i = -1;
+	info->num_of_finish = FALSE;
+	info->exit = FALSE;
 	while (++i < info->num_of_philo)
 	{
 		info->philo[i].id = 0;

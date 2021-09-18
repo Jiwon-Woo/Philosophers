@@ -15,7 +15,7 @@
 // 	return ((void *)0);
 // }
 
-void	*routine(void *v_philo)
+void	*philo_routine(void *v_philo)
 {
 	t_philo *philo = (t_philo *)v_philo;
 	int	must_eat = philo->info->num_of_each_must_eat;
@@ -24,10 +24,7 @@ void	*routine(void *v_philo)
 	{
 		ft_usleep(50);
 	}
-	int num = -1;
-	if (must_eat <= 0)
-		must_eat = 5;
-	while (++num < must_eat)
+	while (must_eat == -1 || (must_eat != -1 && philo->state != FINISH))
 	{
 		if ((philo->idx) % 2)
 		{
@@ -45,13 +42,21 @@ void	*routine(void *v_philo)
 			pthread_mutex_lock(philo->rfork);
 			philo->state = RFORK;
 		}
-		// pthread_mutex_lock(&(philo->info->lock));
 		philo->state = EAT;
-		philo->count_eat++;
 		ft_print_status(philo, "is eating.");
 		philo->last_eat = get_ms_time();
-		// pthread_mutex_unlock(&(philo->info->lock));
+		philo->count_eat++;
 		ft_usleep(philo->info->time_to_eat);
+		if (philo->count_eat == philo->info->num_of_each_must_eat)
+		{
+			philo->state = FINISH;
+			philo->info->num_of_finish++;
+			printf("%6dms Philosopher %d finished eating. (%d/%d)\n", (int)(get_ms_time() - philo->start_time), 
+			philo->idx, philo->count_eat, philo->info->num_of_each_must_eat);
+			pthread_mutex_unlock(philo->rfork);
+			pthread_mutex_unlock(philo->lfork);
+			break;
+		}
 		philo->state = SLEEP;
 		ft_print_status(philo, "is sleeping.");
 		pthread_mutex_unlock(philo->rfork);
@@ -71,14 +76,26 @@ void	*routine(void *v_philo)
 	return ((void *)0);
 }
 
-double	get_ms_time()
+void	*monitor_routine(void *v_info)
 {
-	struct timeval	time;
-	double			time_ms;
+	t_info *info = (t_info *)v_info;
+	// int	i;
 
-	gettimeofday(&time, 0);
-	time_ms = time.tv_sec * 1000 + ((double)time.tv_usec / 1000);	// 총 몇 밀리초가 흘렀는지 계산
-	return (time_ms);
+	pthread_mutex_lock(&(info->lock));
+	while ((info->num_of_finish < info->num_of_philo) && info->exit == FALSE)
+	{
+		// i = -1;
+		// while (++i < info->num_of_philo)
+		// {
+		// }
+		ft_usleep(100);
+	}
+	pthread_mutex_unlock(&(info->lock));
+	if (info->num_of_finish == info->num_of_philo)
+	{
+		printf("\x1b[32mSUCCESS!\x1b[0m\n");
+	}
+	return ((void *)0);
 }
 
 int	main(int argc, char **argv)
@@ -95,15 +112,17 @@ int	main(int argc, char **argv)
 	arg = 0;
 	if (info == 0)
 		return (ft_error("Malloc Error\n"));
+	pthread_create(&(info->monitor), NULL, monitor_routine, (void *)(info));
 	i = -1;
 	while (++i < info->num_of_philo)
 	{
-		pthread_create(&(info->philo[i].id), NULL, routine, (void *)(&info->philo[i]));
+		pthread_create(&(info->philo[i].id), NULL, philo_routine, (void *)(&info->philo[i]));
 		// ft_usleep(100);
 	}
 	i = -1;
 	while (++i < info->num_of_philo)
 		pthread_join(info->philo[i].id, NULL);
+	pthread_join(info->monitor, NULL);
 	i = -1;
 	while (++i < info->num_of_philo)
 		pthread_mutex_destroy(&(info->forks[i]));

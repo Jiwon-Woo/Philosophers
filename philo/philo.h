@@ -19,6 +19,11 @@
 # define EAT 3
 # define SLEEP 4
 # define THINK 5
+# define FINISH 6
+# define DIE 7
+
+# define FALSE 0
+# define TRUE 1
 
 typedef struct s_info t_info;
 typedef struct s_philo t_philo;
@@ -34,6 +39,7 @@ typedef struct s_philo {
 	int				state;
 	double			last_eat;
 	double			start_time;
+	int				die;
 	t_info			*info;
 }	t_philo;
 
@@ -43,8 +49,11 @@ typedef struct s_info {
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				num_of_each_must_eat;
+	int				num_of_finish;
+	int				exit;
 	pthread_mutex_t	*forks;
 	t_philo			*philo;
+	pthread_t		monitor;
 	pthread_mutex_t	lock;
 	pthread_mutex_t	print;
 	pthread_mutex_t	sleeping;
