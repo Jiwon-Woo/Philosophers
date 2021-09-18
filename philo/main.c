@@ -22,9 +22,9 @@ void	*philo_routine(void *v_philo)
 
 	if ((philo->idx) % 2 == 0)
 	{
-		ft_usleep(50);
+		ft_usleep(0.5);
 	}
-	while (must_eat == -1 || (must_eat != -1 && philo->state != FINISH))
+	while ((must_eat == -1 || (must_eat != -1 && philo->state != FINISH)) && philo->info->exit == FALSE)
 	{
 		if ((philo->idx) % 2)
 		{
@@ -73,28 +73,48 @@ void	*philo_routine(void *v_philo)
 		}
 		pthread_mutex_unlock(&(philo->info->thinking));
 	}
+	pthread_mutex_unlock(philo->rfork);
+	pthread_mutex_unlock(philo->lfork);
+	pthread_mutex_unlock(&(philo->info->thinking));
 	return ((void *)0);
 }
 
 void	*monitor_routine(void *v_info)
 {
-	t_info *info = (t_info *)v_info;
-	// int	i;
+	t_info	*info = (t_info *)v_info;
+	int		i;
 
 	pthread_mutex_lock(&(info->lock));
 	while ((info->num_of_finish < info->num_of_philo) && info->exit == FALSE)
 	{
-		// i = -1;
-		// while (++i < info->num_of_philo)
-		// {
-		// }
-		ft_usleep(100);
+		i = -1;
+		while (++i < info->num_of_philo)
+		{
+			if (info->philo[i].last_eat == 0)
+			{
+				if (get_ms_time() - info->philo[i].start_time >= info->time_to_die)
+				{
+					info->exit = TRUE;
+					break;
+				}
+			}
+			else
+			{
+				if (get_ms_time() - info->philo[i].last_eat >= info->time_to_die)
+				{
+					info->exit = TRUE;
+					break;
+				}
+			}
+			ft_usleep(0.1);
+		}
+		ft_usleep(0.1);
 	}
 	pthread_mutex_unlock(&(info->lock));
 	if (info->num_of_finish == info->num_of_philo)
-	{
-		printf("\x1b[32mSUCCESS!\x1b[0m\n");
-	}
+		printf("\x1b[32m%6dms SUCCESS! Everyone finished their meal.\x1b[0m\n", (int)(get_ms_time() - info->philo[0].start_time));
+	else if (info->exit == TRUE)
+		printf("\x1b[31m%6dms FAIL... SOMEONE IS DEAD.\x1b[0m\n", (int)(get_ms_time() - info->philo[0].start_time));
 	return ((void *)0);
 }
 
