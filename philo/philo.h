@@ -25,8 +25,9 @@ typedef struct s_philo t_philo;
 
 typedef struct s_philo {
 	int				idx;
-	// int				rfork_idx;
-	// int				lfork_idx;
+	int				rphilo;
+	int				lphilo;
+	int				count_eat;
 	pthread_t		id;
 	pthread_mutex_t	*rfork;
 	pthread_mutex_t	*lfork;
@@ -45,14 +46,18 @@ typedef struct s_info {
 	pthread_mutex_t	*forks;
 	t_philo			*philo;
 	pthread_mutex_t	lock;
+	pthread_mutex_t	print;
 	pthread_mutex_t	sleeping;
+	pthread_mutex_t	thinking;
 }	t_info;
 
 int		ft_strlen(char *str);
 int		ft_atoi(char *str, int *integer);
-int		ft_error(char *err_message);
+int		ft_error(char *error_message);
 double	get_ms_time();
 int		*is_valid_arg(int argc, char **argv);
 t_info	*init_info(int *philo_arg);
+void	ft_print_status(t_philo *philo, char *status);
+void	ft_usleep(double time);
 
 #endif
