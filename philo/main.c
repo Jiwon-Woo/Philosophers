@@ -6,7 +6,7 @@ void	*philo_routine(void *v_philo)
 	int	must_eat = philo->info->num_of_each_must_eat;
 
 	if ((philo->idx) % 2 == 0)
-		ft_usleep(0.05);
+		ft_usleep(0.1);
 	while ((must_eat == -1 || (must_eat != -1 && philo->state != FINISH)) && philo->info->exit == FALSE)
 	{
 		if ((philo->idx) % 2)
