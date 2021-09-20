@@ -31,10 +31,10 @@ void	init_philo(t_info *info)
 		info->philo[i].rfork = &(info->forks[i]);
 		info->philo[i].lfork = &(info->forks[(i + 1) % info->num_of_philo]);
 		info->philo[i].info = info;
-		info->philo[i].start_time = get_ms_time();
 		info->philo[i].last_eat = 0;
 		info->philo[i].state = 0;
 		info->philo[i].count_eat = 0;
+		info->philo[i].start_time = get_ms_time();
 	}
 }
 

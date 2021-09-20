@@ -116,9 +116,9 @@ void	*monitor_routine(void *v_info)
 	pthread_mutex_unlock(&(info->lock));
 	pthread_mutex_lock(&(info->print));
 	if (info->num_of_finish == info->num_of_philo)
-		printf("\x1b[32m%6dms SUCCESS! Everyone finished their meal.\x1b[0m\n", (int)(get_ms_time() - info->philo[0].start_time));
+		printf("\x1b[32m%6dms SUCCESS! Everyone finished their meal.\x1b[0m\n", (int)(get_ms_time() - info->philo[i].start_time));
 	else if (info->exit == TRUE)
-		printf("\x1b[31m%6dms FAIL... SOMEONE IS DEAD.\x1b[0m\n", (int)(get_ms_time() - info->philo[0].start_time));
+		printf("\x1b[31m%6dms   Philosopher %-3d died\x1b[0m\n", (int)(get_ms_time() - info->philo[i].start_time), info->philo[i].idx);
 	pthread_mutex_unlock(&(info->print));
 	i = -1;
 	while (++i < info->num_of_philo)
@@ -143,16 +143,18 @@ int	main(int argc, char **argv)
 	arg = 0;
 	if (info == 0)
 		return (ft_error("Malloc Error\n"));
-	pthread_create(&(info->monitor), NULL, monitor_routine, (void *)(info));
 	i = -1;
 	while (++i < info->num_of_philo)
 	{
 		pthread_create(&(info->philo[i].id), NULL, philo_routine, (void *)(&info->philo[i]));
-		ft_usleep(0.05);
+		ft_usleep(0.1);
 	}
+	pthread_create(&(info->monitor), NULL, monitor_routine, (void *)(info));
+	while (!(info->exit) && info->num_of_finish < info->num_of_philo)
+		ft_usleep(0.1);
 	i = -1;
 	while (++i < info->num_of_philo)
-		pthread_join(info->philo[i].id, NULL);
+		pthread_detach(info->philo[i].id);
 	pthread_join(info->monitor, NULL);
 	i = -1;
 	while (++i < info->num_of_philo)

@@ -20,8 +20,10 @@ int	ft_error(char *error_message)
 
 void	ft_print_status(t_philo *philo, char *status)
 {
+	if (philo->info->exit)
+		return ;
 	pthread_mutex_lock(&(philo->info->print));
-	printf("%6dms Philosopher %d %s\n", \
+	printf("%6dms   Philosopher %-3d %s\n", \
 			(int)(get_ms_time() - philo->start_time), philo->idx, status);
 	pthread_mutex_unlock(&(philo->info->print));
 }
