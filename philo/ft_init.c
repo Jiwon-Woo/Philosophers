@@ -18,7 +18,7 @@ void	init_philo(t_info *info)
 
 	i = -1;
 	info->num_of_finish = 0;
-	info->exit = FALSE;
+	info->someone_die = FALSE;
 	while (++i < info->num_of_philo)
 	{
 		info->philo[i].id = 0;
@@ -47,15 +47,15 @@ void	init_arg(t_info *info, int *arg)
 	info->num_of_each_must_eat = arg[NUM_OF_EACH_MUST_EAT];
 }
 
-int	init_forks(t_info *info)
+int	init_mutex(t_info *info)
 {
 	int	i;
 	int	j;
 
 	pthread_mutex_init(&(info->lock), NULL);
-	pthread_mutex_init(&(info->sleeping), NULL);
-	pthread_mutex_init(&(info->thinking), NULL);
 	pthread_mutex_init(&(info->print), NULL);
+	pthread_mutex_init(&(info->finish), NULL);
+	pthread_mutex_init(&(info->die), NULL);
 	i = -1;
 	while (++i < info->num_of_philo)
 	{
@@ -85,7 +85,7 @@ t_info	*init_info(int *arg)
 	if (info->philo == 0 || info->forks == 0)
 		return (free_info(info));
 	init_arg(info, arg);
-	if (!init_forks(info))
+	if (!init_mutex(info))
 		return (free_info(info));
 	init_philo(info);
 	return (info);

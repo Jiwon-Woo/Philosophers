@@ -5,7 +5,9 @@ LFLAG = -L. -lphilo
 SOURCE = ft_utils.c \
 	ft_atoi.c \
 	ft_init.c \
-	ft_valid.c 
+	ft_valid.c \
+	ft_getter.c \
+	thread_philo.c
 OBJECT = $(SOURCE:.c=.o)
 MAIN = main.c
 HEADER = philo.h
