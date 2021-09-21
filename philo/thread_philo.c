@@ -53,15 +53,28 @@ void	*philo_routine(void *v_philo)
 	return ((void *)0);
 }
 
-void	create_philo(t_info *info)
+int	create_philo(t_info *info)
 {
 	int	i;
 
 	i = -1;
 	while ((++i) * 2 < info->num_of_philo)
-		pthread_create(&(info->philo[i * 2].id), NULL, philo_routine, (void *)(&info->philo[i * 2]));
+	{
+		if (pthread_create(&(info->philo[i * 2].id), NULL, \
+				philo_routine, (void *)(&info->philo[i * 2])))
+		{
+			return (-1);
+		}
+	}
 	ft_usleep(0.1);
 	i = -1;
 	while ((++i) * 2 + 1 < info->num_of_philo)
-		pthread_create(&(info->philo[i * 2 + 1].id), NULL, philo_routine, (void *)(&info->philo[i * 2 + 1]));
+	{
+		if (pthread_create(&(info->philo[i * 2 + 1].id), NULL, \
+				philo_routine, (void *)(&info->philo[i * 2 + 1])))
+		{
+			return (-1);
+		}
+	}
+	return (1);
 }

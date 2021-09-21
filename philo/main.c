@@ -34,18 +34,12 @@ void	*monitor_routine(void *v_info)
 
 int	main(int argc, char **argv)
 {
-	int		*arg;
 	t_info	*info;
 	int		i;
 
-	arg = is_valid_arg(argc, argv);
-	if (arg == 0)
-		return (ft_error("Argument Error\n"));
-	info = init_info(arg);
-	free(arg);
-	arg = 0;
+	info = init_info(argc, argv);
 	if (info == 0)
-		return (ft_error("Malloc Error\n"));
+		return (ft_error("Error\n"));
 	create_philo(info);
 	pthread_create(&(info->monitor), NULL, monitor_routine, (void *)(info));
 	while (!(get_someone_die(info)) && get_num_of_finish(info) < info->num_of_philo)
@@ -61,17 +55,7 @@ int	main(int argc, char **argv)
 		pthread_mutex_unlock(&(info->print));
 	}
 	pthread_join(info->monitor, NULL);
-	i = -1;
-	while (++i < info->num_of_philo)
-		pthread_mutex_unlock(&(info->forks[i]));
-	pthread_mutex_unlock(&(info->lock));
-	pthread_mutex_unlock(&(info->print));
-	pthread_mutex_unlock(&(info->finish));
-	i = -1;
-	while (++i < info->num_of_philo)
-		pthread_mutex_destroy(&(info->forks[i]));
-	pthread_mutex_destroy(&(info->lock));
-	pthread_mutex_destroy(&(info->print));
-	pthread_mutex_destroy(&(info->finish));
+	free_mutex(info);
+	// free_info(info);
 	return (0);
 }
