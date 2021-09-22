@@ -9,9 +9,7 @@ int	main(int argc, char **argv)
 		return (ft_error("Error\n"));
 	if (create_philo(info) < 0)
 		return (ft_exit(info, "Error\n", 1));
-	ft_usleep(0.1);
-	if (pthread_create(&(info->monitor), NULL, monitor_routine, (void *)(info)))
+	if (create_monitor(info) < 0)
 		return (ft_exit(info, "Error\n", 1));
-	pthread_join(info->monitor, NULL);
-	return (ft_exit(info, NULL, 0));
+	return (0);
 }

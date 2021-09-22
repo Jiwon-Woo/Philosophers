@@ -66,6 +66,6 @@ int		get_num_of_finish(t_info *info);
 int		get_someone_die(t_info *info);
 double	get_philo_last_eat(t_info *info, int i);
 int		create_philo(t_info *info);
-void	*monitor_routine(void *v_info);
+int		create_monitor(t_info *info);
 
 #endif
