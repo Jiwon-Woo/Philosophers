@@ -49,19 +49,23 @@ typedef struct s_info {
 	pthread_mutex_t	print;
 	pthread_mutex_t	finish;
 	pthread_mutex_t	die;
+	pthread_mutex_t	last_meal;
 }	t_info;
 
 int		ft_atoi(char *str, int *integer);
 int		ft_strlen(char *str);
-int		ft_error(char *error_message);
-void	ft_print_status(t_philo *philo, char *status);
+void	ft_print_status(double time, t_philo *philo, char *status);
 void	ft_usleep(double time);
 double	get_ms_time(void);
+int		ft_error(char *error_message);
 t_info	*free_info(t_info *info);
 int		free_mutex(t_info *info);
+int		ft_exit(t_info *info, char *error, int exit);
 t_info	*init_info(int argc, char **argv);
-int		create_philo(t_info *info);
 int		get_num_of_finish(t_info *info);
 int		get_someone_die(t_info *info);
+double	get_philo_last_eat(t_info *info, int i);
+int		create_philo(t_info *info);
+void	*monitor_routine(void *v_info);
 
 #endif

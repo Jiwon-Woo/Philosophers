@@ -12,13 +12,7 @@ int	ft_strlen(char *str)
 	return (len);
 }
 
-int	ft_error(char *error_message)
-{
-	write(1, error_message, ft_strlen(error_message));
-	return (1);
-}
-
-void	ft_print_status(t_philo *philo, char *status)
+void	ft_print_status(double time, t_philo *philo, char *status)
 {
 	pthread_mutex_lock(&(philo->info->print));
 	if (get_someone_die(philo->info))
@@ -26,8 +20,8 @@ void	ft_print_status(t_philo *philo, char *status)
 		pthread_mutex_unlock(&(philo->info->print));
 		return ;
 	}
-	printf("%6dms   Philosopher %-3d %s\n", \
-			(int)(get_ms_time() - philo->start_time), philo->idx, status);
+	printf("%6dms   Philosopher %-3d  %s\n", \
+			(int)(time - philo->start_time), philo->idx, status);
 	pthread_mutex_unlock(&(philo->info->print));
 }
 

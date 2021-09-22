@@ -7,7 +7,8 @@ SOURCE =  ft_atoi.c \
 	ft_getter.c \
 	ft_init.c \
 	ft_utils.c \
-	thread_philo.c
+	ft_philo.c \
+	ft_monitor.c
 OBJECT = $(SOURCE:.c=.o)
 MAIN = main.c
 HEADER = philo.h

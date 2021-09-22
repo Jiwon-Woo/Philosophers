@@ -49,6 +49,7 @@ int	init_mutex(t_info *info)
 	error += pthread_mutex_init(&(info->print), NULL);
 	error += pthread_mutex_init(&(info->finish), NULL);
 	error += pthread_mutex_init(&(info->die), NULL);
+	error += pthread_mutex_init(&(info->last_meal), NULL);
 	if (error)
 		return (free_mutex(info));
 	return (1);
