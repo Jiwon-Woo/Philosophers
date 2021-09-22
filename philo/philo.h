@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philo.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jwoo <jwoo@student.42seoul.kr>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/09/22 19:17:14 by jwoo              #+#    #+#             */
+/*   Updated: 2021/09/22 19:17:15 by jwoo             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PHILO_H
 # define PHILO_H
 
@@ -13,9 +25,6 @@
 # define TIME_TO_EAT 2
 # define TIME_TO_SLEEP 3
 # define NUM_OF_EACH_MUST_EAT 4
-
-# define FINISH 1
-# define DIE 2
 
 # define FALSE 0
 # define TRUE 1
@@ -57,7 +66,6 @@ int		ft_strlen(char *str);
 void	ft_print_status(double time, t_philo *philo, char *status);
 void	ft_usleep(double time);
 double	get_ms_time(void);
-int		ft_error(char *error_message);
 t_info	*free_info(t_info *info);
 int		free_mutex(t_info *info);
 int		ft_exit(t_info *info, char *error, int exit);

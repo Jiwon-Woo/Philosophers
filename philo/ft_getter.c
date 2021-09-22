@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_getter.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jwoo <jwoo@student.42seoul.kr>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/09/22 19:17:39 by jwoo              #+#    #+#             */
+/*   Updated: 2021/09/22 19:17:40 by jwoo             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 int	get_num_of_finish(t_info *info)
@@ -14,9 +26,9 @@ int	get_someone_die(t_info *info)
 	return (info->someone_die);
 }
 
-// double	get_philo_last_eat(t_info *info, int i)
-// {
-// 	pthread_mutex_lock(&(info->last_meal));
-// 	pthread_mutex_unlock(&(info->last_meal));
-// 	return (info->philo[i].last_eat);
-// }
+double	get_philo_last_eat(t_info *info, int i)
+{
+	pthread_mutex_lock(&(info->last_meal));
+	pthread_mutex_unlock(&(info->last_meal));
+	return (info->philo[i].last_eat);
+}

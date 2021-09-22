@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_exit.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jwoo <jwoo@student.42seoul.kr>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/09/22 19:17:29 by jwoo              #+#    #+#             */
+/*   Updated: 2021/09/22 19:17:30 by jwoo             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 int	ft_error(char *error_message)
@@ -35,8 +47,6 @@ t_info	*free_info(t_info *info)
 {
 	if (info->philo)
 		free(info->philo);
-	if (info->monitor)
-		free(info->philo);
 	if (info->forks)
 		free(info->forks);
 	info->philo = 0;
@@ -48,9 +58,11 @@ t_info	*free_info(t_info *info)
 
 int	ft_exit(t_info *info, char *error, int exit)
 {
-	free_mutex(info);
-	free_info(info);
 	if (error)
 		ft_error(error);
+	if (info == 0)
+		return (exit);
+	free_mutex(info);
+	free_info(info);
 	return (exit);
 }

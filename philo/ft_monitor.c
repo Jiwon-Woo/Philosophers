@@ -1,10 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_monitor.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jwoo <jwoo@student.42seoul.kr>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/09/22 19:17:33 by jwoo              #+#    #+#             */
+/*   Updated: 2021/09/22 19:17:34 by jwoo             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 int	philo_starving(t_info *info, int i)
 {
 	double	base;
 
-	base = info->philo[i].last_eat;
+	base = get_philo_last_eat(info, i);
 	if (base == 0)
 		base = info->philo[i].start_time;
 	if (get_ms_time() - base > info->time_to_die)

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_philo.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jwoo <jwoo@student.42seoul.kr>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/09/22 19:17:35 by jwoo              #+#    #+#             */
+/*   Updated: 2021/09/22 19:17:37 by jwoo             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 void	philo_eating(t_philo *philo)
@@ -5,13 +17,13 @@ void	philo_eating(t_philo *philo)
 	if ((philo->idx) % 2)
 	{
 		pthread_mutex_lock(philo->rfork);
-		ft_print_status(get_ms_time(), philo, "has taken a right fork");
+		ft_print_status(get_ms_time(), philo, "has taken a fork");
 		pthread_mutex_lock(philo->lfork);
 	}
 	else
 	{
 		pthread_mutex_lock(philo->lfork);
-		ft_print_status(get_ms_time(), philo, "has taken a left fork");
+		ft_print_status(get_ms_time(), philo, "has taken a fork");
 		pthread_mutex_lock(philo->rfork);
 	}
 	philo->count_eat++;
