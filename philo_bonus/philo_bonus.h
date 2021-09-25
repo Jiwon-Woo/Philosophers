@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   philo_bonus.h                                      :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: jwoo <jwoo@student.42seoul.kr>             +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/22 19:17:14 by jwoo              #+#    #+#             */
-/*   Updated: 2021/09/25 11:00:40 by jwoo             ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef PHILO_BONUS_H
 # define PHILO_BONUS_H
 
@@ -19,6 +7,8 @@
 # include <string.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <semaphore.h>
+# include <signal.h>
 
 # define NUM_OF_PHILO 0
 # define TIME_TO_DIE 1
