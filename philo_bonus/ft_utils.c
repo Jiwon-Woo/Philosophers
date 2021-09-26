@@ -45,3 +45,20 @@ double	get_ms_time(void)
 	time_ms = time.tv_sec * 1000 + ((double)time.tv_usec / 1000);
 	return (time_ms);
 }
+
+int	ft_strncmp(char *s1, char *s2, int n)
+{
+	int		len;
+
+	if (n == 0)
+		return (0);
+	len = 0;
+	while (len + 1 < n && s1[len] && s2[len])
+	{
+		if (s1[len] == s2[len])
+			len++;
+		else
+			break ;
+	}
+	return (s1[len] - s2[len]);
+}

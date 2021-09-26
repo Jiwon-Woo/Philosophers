@@ -15,10 +15,8 @@ void	philo_eating(t_philo *philo)
 		pthread_mutex_lock(philo->rfork);
 	}
 	philo->count_eat++;
-	pthread_mutex_lock(&(philo->info->last_meal));
 	philo->last_eat = get_ms_time();
 	ft_print_status(philo->last_eat, philo, "is eating");
-	pthread_mutex_unlock(&(philo->info->last_meal));
 	ft_usleep(philo->info->time_to_eat);
 }
 
@@ -37,9 +35,7 @@ void	*philo_routine(void *v_philo)
 	t_philo	*philo;
 
 	philo = (t_philo *)v_philo;
-	pthread_mutex_lock(&(philo->info->last_meal));
 	philo->last_eat = get_ms_time();
-	pthread_mutex_unlock(&(philo->info->last_meal));
 	while (!get_someone_die(philo->info))
 	{
 		philo_eating(philo);
@@ -62,21 +58,14 @@ int	create_philo(t_info *info)
 	int	i;
 
 	i = -1;
-	while ((++i) * 2 < info->num_of_philo)
+	while (++i < info->num_of_philo)
 	{
-		if (pthread_create(&(info->philo[i * 2].id), NULL, \
-				philo_routine, (void *)(&info->philo[i * 2])))
-			return (-1);
-		pthread_detach(info->philo[i * 2].id);
+		info->philo[i] = fork();
+		if (info->philo[i] < 0)
+			exit (1);
+		else if (info->philo[i] == 0)
+			philo_routine(info->philo[i]);
 	}
-	ft_usleep(0.1);
-	i = -1;
-	while ((++i) * 2 + 1 < info->num_of_philo)
-	{
-		if (pthread_create(&(info->philo[i * 2 + 1].id), NULL, \
-				philo_routine, (void *)(&info->philo[i * 2 + 1])))
-			return (-1);
-		pthread_detach(info->philo[i * 2 + 1].id);
-	}
+	// ft_usleep(0.1);
 	return (1);
 }
