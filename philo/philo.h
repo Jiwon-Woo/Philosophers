@@ -6,7 +6,7 @@
 /*   By: jwoo <jwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/22 19:17:14 by jwoo              #+#    #+#             */
-/*   Updated: 2021/09/22 19:17:15 by jwoo             ###   ########.fr       */
+/*   Updated: 2021/09/26 15:15:01 by jwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ typedef struct s_philo {
 	pthread_t		id;
 	pthread_mutex_t	*rfork;
 	pthread_mutex_t	*lfork;
-	int				state;
 	double			last_eat;
 	double			start_time;
 	t_info			*info;
@@ -58,21 +57,20 @@ typedef struct s_info {
 	pthread_mutex_t	print;
 	pthread_mutex_t	finish;
 	pthread_mutex_t	die;
-	pthread_mutex_t	last_meal;
 }	t_info;
 
 int		ft_atoi(char *str, int *integer);
 int		ft_strlen(char *str);
-void	ft_print_status(double time, t_philo *philo, char *status);
+void	ft_print_status(t_philo *philo, char *status);
 void	ft_usleep(double time);
 double	get_ms_time(void);
+int		ft_strncmp(char *s1, char *s2, int n);
 t_info	*free_info(t_info *info);
 int		free_mutex(t_info *info);
 int		ft_exit(t_info *info, char *error, int exit);
 t_info	*init_info(int argc, char **argv);
 int		get_num_of_finish(t_info *info);
 int		get_someone_die(t_info *info);
-double	get_philo_last_eat(t_info *info, int i);
 int		create_philo(t_info *info);
 int		create_monitor(t_info *info);
 

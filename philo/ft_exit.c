@@ -6,17 +6,11 @@
 /*   By: jwoo <jwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/22 19:17:29 by jwoo              #+#    #+#             */
-/*   Updated: 2021/09/22 19:17:30 by jwoo             ###   ########.fr       */
+/*   Updated: 2021/09/26 15:32:43 by jwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-int	ft_error(char *error_message)
-{
-	write(1, error_message, ft_strlen(error_message));
-	return (1);
-}
 
 int	free_mutex(t_info *info)
 {
@@ -51,7 +45,6 @@ t_info	*free_info(t_info *info)
 		free(info->forks);
 	info->philo = 0;
 	info->forks = 0;
-	info->monitor = 0;
 	free(info);
 	return (0);
 }
@@ -59,7 +52,7 @@ t_info	*free_info(t_info *info)
 int	ft_exit(t_info *info, char *error, int exit)
 {
 	if (error)
-		ft_error(error);
+		write(1, error, ft_strlen(error));
 	if (info == 0)
 		return (exit);
 	free_mutex(info);

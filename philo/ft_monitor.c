@@ -6,7 +6,7 @@
 /*   By: jwoo <jwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/22 19:17:33 by jwoo              #+#    #+#             */
-/*   Updated: 2021/09/22 19:17:34 by jwoo             ###   ########.fr       */
+/*   Updated: 2021/09/26 14:18:09 by jwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	philo_starving(t_info *info, int i)
 {
 	double	base;
 
-	base = get_philo_last_eat(info, i);
+	base = info->philo[i].last_eat;
 	if (base == 0)
 		base = info->philo[i].start_time;
 	if (get_ms_time() - base > info->time_to_die)

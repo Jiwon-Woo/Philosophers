@@ -6,7 +6,7 @@
 /*   By: jwoo <jwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/22 19:17:43 by jwoo              #+#    #+#             */
-/*   Updated: 2021/09/22 19:17:43 by jwoo             ###   ########.fr       */
+/*   Updated: 2021/09/26 16:26:36 by jwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ void	init_option(t_info *info, int *arg)
 	info->time_to_eat = arg[TIME_TO_EAT];
 	info->time_to_sleep = arg[TIME_TO_SLEEP];
 	info->num_of_each_must_eat = arg[NUM_OF_EACH_MUST_EAT];
+	info->num_of_finish = 0;
+	info->someone_die = FALSE;
 }
 
 int	init_mutex(t_info *info)
@@ -61,7 +63,6 @@ int	init_mutex(t_info *info)
 	error += pthread_mutex_init(&(info->print), NULL);
 	error += pthread_mutex_init(&(info->finish), NULL);
 	error += pthread_mutex_init(&(info->die), NULL);
-	error += pthread_mutex_init(&(info->last_meal), NULL);
 	if (error)
 		return (free_mutex(info));
 	return (1);
@@ -72,8 +73,6 @@ void	init_philo(t_info *info)
 	int		i;
 
 	i = -1;
-	info->num_of_finish = 0;
-	info->someone_die = FALSE;
 	while (++i < info->num_of_philo)
 	{
 		info->philo[i].id = 0;
@@ -82,7 +81,6 @@ void	init_philo(t_info *info)
 		info->philo[i].lfork = &(info->forks[(i + 1) % info->num_of_philo]);
 		info->philo[i].info = info;
 		info->philo[i].last_eat = 0;
-		info->philo[i].state = 0;
 		info->philo[i].count_eat = 0;
 		info->philo[i].start_time = get_ms_time();
 	}

@@ -6,7 +6,7 @@
 /*   By: jwoo <jwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/22 19:17:39 by jwoo              #+#    #+#             */
-/*   Updated: 2021/09/22 19:17:40 by jwoo             ###   ########.fr       */
+/*   Updated: 2021/09/26 14:19:05 by jwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,4 @@ int	get_someone_die(t_info *info)
 	pthread_mutex_lock(&(info->die));
 	pthread_mutex_unlock(&(info->die));
 	return (info->someone_die);
-}
-
-double	get_philo_last_eat(t_info *info, int i)
-{
-	pthread_mutex_lock(&(info->last_meal));
-	pthread_mutex_unlock(&(info->last_meal));
-	return (info->philo[i].last_eat);
 }
