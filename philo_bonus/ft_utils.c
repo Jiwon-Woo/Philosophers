@@ -12,17 +12,26 @@ int	ft_strlen(char *str)
 	return (len);
 }
 
-void	ft_print_status(double time, t_philo *philo, char *status)
+void	ft_print_status(t_philo *philo, char *status)
 {
-	pthread_mutex_lock(&(philo->info->print));
+	sem_wait((philo->info->print));
 	if (get_someone_die(philo->info))
 	{
-		pthread_mutex_unlock(&(philo->info->print));
+		sem_post((philo->info->print));
 		return ;
 	}
-	printf("%6dms   Philosopher %-3d  %s\n", \
-			(int)(time - philo->start_time), philo->idx, status);
-	pthread_mutex_unlock(&(philo->info->print));
+	if (ft_strncmp(status, "is eating", ft_strlen("is eating") + 1) == 0)
+	{
+		philo->last_eat = get_ms_time();
+		printf("%6dms   Philosopher %-3d  %s\n", \
+			(int)(philo->last_eat - philo->start_time), philo->idx, status);
+	}
+	else
+	{
+		printf("%6dms   Philosopher %-3d  %s\n", \
+			(int)(get_ms_time() - philo->start_time), philo->idx, status);
+	}
+	sem_post((philo->info->print));
 }
 
 void	ft_usleep(double time)

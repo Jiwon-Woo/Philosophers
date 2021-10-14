@@ -1,62 +1,47 @@
 #include "philo_bonus.h"
 
-int	philo_starving(t_info *info, int i)
+void	philo_starving(t_philo *philo)
 {
 	double	base;
 
-	base = info->philo[i].last_eat;
+	base = philo->last_eat;
 	if (base == 0)
-		base = info->philo[i].start_time;
-	if (get_ms_time() - base > info->time_to_die)
+		base = philo->start_time;
+	if (get_ms_time() - base > philo->info->time_to_die)
 	{
 		ft_usleep(2);
-		pthread_mutex_lock(&(info->die));
-		info->someone_die = TRUE;
-		pthread_mutex_unlock(&(info->die));
-		return (1);
+		// sem_wait((philo->info->die));
+		philo->info->someone_die = TRUE;
+		// sem_post((info->die));
 	}
-	return (0);
 }
 
-void	*die_or_finish(t_info *info, int i)
+void	*monitor_routine(void *v_philo)
 {
-	pthread_mutex_lock(&(info->print));
-	if (get_num_of_finish(info) == info->num_of_philo)
-		printf("\x1b[32m%6dms   SUCCESS! Everyone finished their meal.\x1b[0m\n", \
-		(int)(get_ms_time() - info->philo[i % info->num_of_philo].start_time));
-	else if (get_someone_die(info))
-		printf("\x1b[31m%6dms   Philosopher %-3d  died\x1b[0m\n", \
-		(int)(get_ms_time() - info->philo[i].start_time), info->philo[i].idx);
-	pthread_mutex_unlock(&(info->print));
-	return ((void *)0);
-}
+	t_philo	*philo;
 
-void	*monitor_routine(void *v_info)
-{
-	t_info	*info;
-	int		i;
-
-	info = (t_info *)v_info;
-	while (!get_someone_die(info) && \
-		get_num_of_finish(info) < info->num_of_philo)
+	philo = (t_philo *)v_philo;
+	while (!(philo->info->someone_die))
 	{
-		i = -1;
-		while (++i < info->num_of_philo && \
-			get_num_of_finish(info) < info->num_of_philo)
-		{
-			if (philo_starving(info, i))
-				break ;
-			ft_usleep(0.01);
-		}
+		philo_starving(philo);
+		// ft_usleep(0.01);
 	}
-	return (die_or_finish(info, i));
+	if (philo->info->someone_die == TRUE)
+	{
+		sem_wait(philo->info->die);
+		sem_wait(philo->info->print);
+		printf("\x1b[31m%6dms   Philosopher %-3d  died\x1b[0m\n", \
+		(int)(get_ms_time() - philo->start_time), philo->idx);
+		sem_post(philo->info->print);
+		// sem_post(philo->info->die);
+	}
+	return ((void *)(0));
 }
 
-int	create_monitor(t_info *info)
+int	create_monitor(t_philo *philo)
 {
-	ft_usleep(0.1);
-	if (pthread_create(&(info->monitor), NULL, monitor_routine, (void *)(info)))
+	if (pthread_create(&(philo->info->monitor), NULL, monitor_routine, (void *)(philo)))
 		return (-1);
-	pthread_join(info->monitor, NULL);
+	pthread_detach(philo->info->monitor);
 	return (1);
 }

@@ -9,7 +9,7 @@ int	main(int argc, char **argv)
 		return (ft_exit(NULL, "Error\n", 1));
 	if (create_philo(info) < 0)
 		return (ft_exit(info, "Error\n", 1));
-	if (create_monitor(info) < 0)
-		return (ft_exit(info, "Error\n", 1));
+	// if (create_monitor(info) < 0)
+	// 	return (ft_exit(info, "Error\n", 1));
 	return (ft_exit(info, NULL, 0));
 }

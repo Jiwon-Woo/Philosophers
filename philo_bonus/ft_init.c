@@ -44,6 +44,7 @@ void	init_info(t_info *info, int *arg)
 	info->num_of_each_must_eat = arg[NUM_OF_EACH_MUST_EAT];
 	info->num_of_finish = 0;
 	info->someone_die = FALSE;
+	info->pick = init_semaphore("pick", 1);
 	info->print = init_semaphore("print", 1);
 	info->finish = init_semaphore("finish", 1);
 	info->die = init_semaphore("die", 1);
