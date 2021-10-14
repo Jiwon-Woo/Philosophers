@@ -6,7 +6,7 @@
 /*   By: jwoo <jwoo@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/22 19:17:33 by jwoo              #+#    #+#             */
-/*   Updated: 2021/09/26 14:18:09 by jwoo             ###   ########.fr       */
+/*   Updated: 2021/09/28 17:15:04 by jwoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,7 @@ void	*die_or_finish(t_info *info, int i)
 {
 	pthread_mutex_lock(&(info->print));
 	if (get_num_of_finish(info) == info->num_of_philo)
-		printf("\x1b[32m%6dms   SUCCESS! Everyone finished their meal.\x1b[0m\n", \
-		(int)(get_ms_time() - info->philo[i % info->num_of_philo].start_time));
+		printf("\x1b[32m  SUCCESS! Everyone finished their meal.\x1b[0m\n");
 	else if (get_someone_die(info))
 		printf("\x1b[31m%6dms   Philosopher %-3d  died\x1b[0m\n", \
 		(int)(get_ms_time() - info->philo[i].start_time), info->philo[i].idx);
